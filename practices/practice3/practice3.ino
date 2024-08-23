@@ -1,4 +1,4 @@
-// Definimos pines. 
+// Definimos pines de los botones y leds.  
 #define btnUp 4 // btn 1.
 #define btnDown 15 // btn 2.
 
@@ -27,30 +27,28 @@ void setup() {
   for (int i = 0; i < 5; i++) {
     pinMode(leds[i], OUTPUT);  
   }
-
-  Serial.begin(115200);
 }
 
-void loop() {
+void loop() { 
+  // Leer si los botones son presionados. 
   int in_up = digitalRead(btnUp);
   int in_down = digitalRead(btnDown);
   
-  if (in_up == LOW) {
+  if (in_up == LOW) { 
     if (millis() > timeCounter + timeThreshold) {
-      if (idx > 4) {
+      if (idx > 4) { // Si es el ultimo led reiniciamos el index y apagamos todos los leds. 
         LedsOff();
         idx = 0;
-      } else {
+      } else { // Si no encendemos el siguiente led. 
         digitalWrite(leds[idx], HIGH);
         idx++;
-        Serial.println(idx);
       }
       timeCounter = millis();
     }
   }
 
   if (in_down == HIGH) {
-    if (millis() > timeCounter + timeThreshold) {
+    if (millis() > timeCounter + timeThreshold) { // Si apretamos el segundo boton apagamos todos los leds. 
       LedsOff();
       idx = 0;
       timeCounter = millis();
